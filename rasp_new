@@ -1,17 +1,11 @@
 Step 1:Clone the dependency repositories
+
+WORK_DIR is your working directory
+$ 	cd ${WORK_DIR}
+
+Git clone and checkout all git repo according to Recipes information:
 --------------------
-***branch****
-weston 2.0: rocko
-weston 5.0: thud
---------------------
-$ cd ${WORK_DIR}
-$ git clone -b {branch} git://git.yoctoproject.org/poky.git 
-$ git clone -b {branch} git://git.openembedded.org/meta-openembedded
-$ git clone -b {branch} https://github.com/meta-qt5/meta-qt5
-$ git clone -b {branch} git://git.yoctoproject.org/meta-security
-$ git clone -b {branch} git://git.yoctoproject.org/meta-raspberrypi
---------------------
-Weston 6.0: Git clone and checkout all git repo according to Recipes information:
+***Weston 6.0*** 
 poky:
 	git://git.yoctoproject.org/poky.git
 	67266331b0f557c01cde1cc1b1a1de7197443a6c
@@ -28,17 +22,47 @@ meta-raspberrypi
 	git://git.yoctoproject.org/meta-raspberrypi
 	8636b6375251ea9553639dcb8bdd985e54c4bc36
 --------------------
+***Weston 2.0***
+poky:
+	git://git.yoctoproject.org/poky.git
+	5f660914cd7eec8117efccdf1eb29c466b4e74f7
+meta-openembedded:
+	git://git.openembedded.org/meta-openembedded
+	eae996301d9c097bcbeb8046f08041dc82bb62f8
+meta-qt5:
+	https://github.com/meta-qt5/meta-qt5
+	e6fb3850d43f857e87f7c53fc7df5933fef98cbd
+meta-security:
+	git://git.yoctoproject.org/meta-security
+	74860b2b61afd033fba130044ae66567ead57aaf
+meta-raspberrypi
+	git://git.yoctoproject.org/meta-raspberrypi
+	8e4c537d84fdde8e3b4642d0dda2c0f4af76d52f
+--------------------
+***Weston 5.0***
+poky:
+	git://git.yoctoproject.org/poky.git
+	2dd610cc27c606f731f83047b4766787aab6e6b2
+meta-openembedded:
+	git://git.openembedded.org/meta-openembedded
+	9b3b907f30b0d5b92d58c7e68289184fda733d3e
+meta-qt5:
+	https://github.com/meta-qt5/meta-qt5
+	1520d5b2b2beec5e1c3209d3178219e93ef08bca
+meta-security:
+	git://git.yoctoproject.org/meta-security
+	31dc4e7532fa7a82060e0b50e5eb8d0414aa7e93
+meta-raspberrypi
+	git://git.yoctoproject.org/meta-raspberrypi
+	c71d79efc5a06a0c896c278c94f5b14413bb4d69
+--------------------
 Step 2: Set up build environment
-
 BUILD_DIR is you build folder
-
-$ source poky/oe-init-build-env $BUILD_DIR
-#$ bitbake-layers add-layer ../meta-raspberrypi
-#$ bitbake-layers add-layer ../meta-openembedded/meta-oe
+$	source poky/oe-init-build-env $BUILD_DIR
 
 Step 3: Set up your local.conf and bblayer.conf
 
-$ vi conf/local.conf
+$	vi conf/local.conf
 
 eidt local.conf with below infomation:
 
@@ -50,7 +74,7 @@ eidt local.conf with below infomation:
 	+ CONNECTIVITY_CHECK_URIS = "" 
 	+ ENABLE_UART="1"
 
-$ vi conf/bblayers.conf
+$	vi conf/bblayers.conf
 Add below infomation:
 
 BBLAYERS ?= " \
@@ -68,7 +92,7 @@ BBLAYERS ?= " \
 
 Step 4: To enable weston-simple-egl client
 
-	vi ../meta-raspberrypi/recipes-graphics/wayland/weston_%.bbappend
+$	vi ../meta-raspberrypi/recipes-graphics/wayland/weston_%.bbappend
 	
 From:
 	EXTRA_OECONF_append_rpi = " \
