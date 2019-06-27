@@ -10,7 +10,24 @@ $ git clone -b {branch} git://git.openembedded.org/meta-openembedded
 $ git clone -b {branch} https://github.com/meta-qt5/meta-qt5
 $ git clone -b {branch} git://git.yoctoproject.org/meta-security
 $ git clone -b {branch} git://git.yoctoproject.org/meta-raspberrypi
-
+--------------------
+Weston 6.0: Git clone and checkout all git repo according to Recipes information:
+poky:
+	git://git.yoctoproject.org/poky.git
+	67266331b0f557c01cde1cc1b1a1de7197443a6c
+meta-openembedded:
+	git://git.openembedded.org/meta-openembedded
+	64974b8779291419486338f75f229a732e450d78
+meta-qt5:
+	https://github.com/meta-qt5/meta-qt5
+	2a5f9415e48a38f6f4eb0cf375737a2d8438e2fe
+meta-security:
+	git://git.yoctoproject.org/meta-security
+	c28b72e91dbd6a4aa7f3517d2859551126e6774c
+meta-raspberrypi
+	git://git.yoctoproject.org/meta-raspberrypi
+	8636b6375251ea9553639dcb8bdd985e54c4bc36
+--------------------
 Step 2: Set up build environment
 
 BUILD_DIR is you build folder
