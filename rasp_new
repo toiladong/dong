@@ -2,7 +2,7 @@ Step 1:Clone the dependency repositories
 --------------------
 ***branch****
 weston 2.0: rocko
-weston 5.0:	thud
+weston 5.0: thud
 --------------------
 $ cd ${WORK_DIR}
 $ git clone -b {branch} git://git.yoctoproject.org/poky.git 
@@ -16,8 +16,8 @@ Step 2: Set up build environment
 BUILD_DIR is you build folder
 
 $ source poky/oe-init-build-env $BUILD_DIR
-$ bitbake-layers add-layer ../meta-raspberrypi
-$ bitbake-layers add-layer ../meta-openembedded/meta-oe
+#$ bitbake-layers add-layer ../meta-raspberrypi
+#$ bitbake-layers add-layer ../meta-openembedded/meta-oe
 
 Step 3: Set up your local.conf and bblayer.conf
 
@@ -44,14 +44,14 @@ BBLAYERS ?= " \
 	${TOPDIR}/../meta-openembedded/meta-networking \
 	${TOPDIR}/../meta-openembedded/meta-perl \
 	${TOPDIR}/../meta-openembedded/meta-python \
-	${TOPDIR}/..poky/meta-qt5 \
-	${TOPDIR}/..poky/meta-raspberrypi \
-	${TOPDIR}/..poky/meta-security \  
+	${TOPDIR}/../meta-qt5 \
+	${TOPDIR}/../meta-raspberrypi \
+	${TOPDIR}/../meta-security \  
 	"
 
 Step 4: To enable weston-simple-egl client
 
-	vi ../poky/meta-raspberrypi/recipes-graphics/wayland/weston_%.bbappend
+	vi ../meta-raspberrypi/recipes-graphics/wayland/weston_%.bbappend
 	
 From:
 	EXTRA_OECONF_append_rpi = " \
