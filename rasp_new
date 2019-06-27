@@ -33,7 +33,7 @@ eidt local.conf with below infomation:
 	+ CONNECTIVITY_CHECK_URIS = "" 
 	+ ENABLE_UART="1"
 
-$ vi conf/bblayer.conf
+$ vi conf/bblayers.conf
 Add below infomation:
 
 BBLAYERS ?= " \
