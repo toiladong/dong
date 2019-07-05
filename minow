@@ -9,12 +9,18 @@ Exact Steps
 
 Checkout the latest sources of the poky and meta-intel repositories:
 
-$ cd
-$ mkdir source
-$ cd source
-$ git clone -b rocko git://git.yoctoproject.org/poky
-$ cd poky
+weston 2.0:
+$ mkdir $WORK_DIR
+$ cd $WORK_DIR
+$ git clone -b rocko git://git.yoctoproject.org/poky.git
 $ git clone -b rocko git://git.yoctoproject.org/meta-intel
+
+weston 5.0:
+$ mkdir $WORK_DIR
+$ cd $WORK_DIR
+$ git clone -b thud git://git.yoctoproject.org/poky.git
+$ git clone -b thud git://git.yoctoproject.org/meta-intel
+
 
 Note: Please replace rocko with the release of your choice (daisy or later) release of Yocto project.
 
