@@ -13,32 +13,42 @@ weston 2.0:
 $ mkdir $WORK_DIR
 $ cd $WORK_DIR
 $ git clone -b rocko git://git.yoctoproject.org/poky.git
+5f660914cd7eec8117efccdf1eb29c466b4e74f7
 $ git clone -b rocko git://git.yoctoproject.org/meta-intel
+4ee8ff5ebe0657bd376d7a79703a21ec070ee779
 
 weston 5.0:
 $ mkdir $WORK_DIR
 $ cd $WORK_DIR
 $ git clone -b thud git://git.yoctoproject.org/poky.git
+2dd610cc27c606f731f83047b4766787aab6e6b2
 $ git clone -b thud git://git.yoctoproject.org/meta-intel
-
+b69b3da2fdba04cacf09a5bb9093222fb1186dca
 
 Note: Please replace rocko with the release of your choice (daisy or later) release of Yocto project.
 
 Initialize the build environment:
 
-$ source oe-init-build-env
+$ source oe-init-build-env $BUILD_DIR
 
 Configure the build environment for the MinnowBoard-MAX. First, add the meta-intel which contains the intel-core* BSPs:
 
-$ echo "BBLAYERS += \"$HOME/source/poky/meta-intel\"" >> conf/bblayers.conf
+add to conf/bblayers.conf below information:
 
-Second, select the BSP by setting the MACHINE variable. If you want a 64bit build, use:
+BBLAYERS ?= " \
+...
+${TOPDIR}/../meta-intel \
+"
 
-$ echo "MACHINE = \"intel-corei7-64\"" >> conf/local.conf
+Second, select the BSP by setting the MACHINE variable.
+add to conf/local.conf below information if you want a 64bit build:
+-MACHINE ??= "qemux86"
++MACHINE = "intel-corei7-64"
 
-Or, if you want 32b images, use:
+add to conf/local.conf below information if you want a 32bit build:
 
-$ echo "MACHINE = \"intel-core2-32\"" >> conf/local.conf
+-MACHINE ??= "qemux86"
++MACHINE = "intel-core2-32"
 
 Now kick off a basic build:
 
