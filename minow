@@ -1,0 +1,68 @@
+Minnowboard:MinnowMaxYoctoProject
+
+The MinnowBoard-MAX is supported by the Yocto Project and the meta-intel intel-corei7-64 and intel-core2-32 BSPs as of the 1.6 (daisy) release (and later versions).
+
+The MinnowBoard-MAX ships with 64b firmware. If you wish to use it in 32b mode, you will need to download the 32b firmware.
+
+The Yocto Project incorporates a build system and meta data for cross-compiling embedded Linux OS images for a variety of architectures and boards. Additional software packages and hardware support are added through layers. You interact with the build system primarily through the bitbake command.
+Exact Steps
+
+Checkout the latest sources of the poky and meta-intel repositories:
+
+$ cd
+$ mkdir source
+$ cd source
+$ git clone -b rocko git://git.yoctoproject.org/poky
+$ cd poky
+$ git clone -b rocko git://git.yoctoproject.org/meta-intel
+
+Note: Please replace rocko with the release of your choice (daisy or later) release of Yocto project.
+
+Initialize the build environment:
+
+$ source oe-init-build-env
+
+Configure the build environment for the MinnowBoard-MAX. First, add the meta-intel which contains the intel-core* BSPs:
+
+$ echo "BBLAYERS += \"$HOME/source/poky/meta-intel\"" >> conf/bblayers.conf
+
+Second, select the BSP by setting the MACHINE variable. If you want a 64bit build, use:
+
+$ echo "MACHINE = \"intel-corei7-64\"" >> conf/local.conf
+
+Or, if you want 32b images, use:
+
+$ echo "MACHINE = \"intel-core2-32\"" >> conf/local.conf
+
+Now kick off a basic build:
+
+$ bitbake core-image-minimal
+
+The result will be a basic console image located here:
+
+tmp/deploy/images/intel-corei7-64/core-image-weston-intel-corei7-64-20180612065756.rootfs.wic
+
+You can write this image to a USB key, SATA drive, or SD card using the mkefidisk.sh script included with poky (scripts/contrib/mkefidisk.sh):
+
+$ sudo dd bs=4M if=core-image-weston-intel-corei7-64-20180612065756.rootfs.wic of=TARGET_DEVICE
+
+TARGET_DEVICE is the name of the device as the MinnowBoard-MAX will see it, likely /dev/sda or /dev/mmcblk0. You may want to copy mkefidisk.sh somewhere in your PATH to save on typing.
+
+With the boot device provisioned, you can insert the media into the MinnowBoard-MAX and boot. It should detect the media and boot to the bootloader and subsequently the OS automatically, if not, you can do so manually from the EFI shell as follows:
+
+Shell> connect -r
+Shell> map -r
+Shell> fs0:
+Shell> bootx64
+
+Or for a 32 bit image:
+
+Shell> bootia32
+
+Next Steps
+
+Now that you can build a basic image, you can experiment with some of the other example images:
+
+$ bitbake core-image-weston
+
+Or create your own image recipes, adding packages to suit your needs. For details on developing with the Yocto Project, please see the Yocto Project Documentation. 
