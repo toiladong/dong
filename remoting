@@ -1,3 +1,40 @@
 PACKAGECONFIG[remoting] = "--enable-remoting,,gstreamer1.0 gstreamer1.0-plugins-base,,"
 
 PACKAGECONFIG_append = " remoting"
+
+dong@dong-ThinkPad-T420:~/data1/rasp_weston6/build$ bitbake core-image-weston
+WARNING: Host distribution "ubuntu-18.10" has not been validated with this version of the build system; you may possibly experience unexpected failures. It is recommended that you use a tested distribution.
+Loading cache: 100% |############################################| Time: 0:00:01
+Loaded 3617 entries from dependency cache.
+NOTE: Resolving any missing task queue dependencies
+
+Build Configuration:
+BB_VERSION           = "1.43.0"
+BUILD_SYS            = "x86_64-linux"
+NATIVELSBSTRING      = "universal"
+TARGET_SYS           = "arm-poky-linux-gnueabi"
+MACHINE              = "raspberrypi3"
+DISTRO               = "poky"
+DISTRO_VERSION       = "2.7+snapshot-20190905"
+TUNE_FEATURES        = "arm vfp cortexa7 neon vfpv4 thumb callconvention-hard"
+TARGET_FPU           = "hard"
+meta                 
+meta-poky            
+meta-yocto-bsp       = "master:27d60c5a812774f0e5c43161e5b514c4aebdf301"
+meta-raspberrypi     = "master:40283f583b57d67798135ed4a94cb8b5288ea965"
+meta-oe              
+meta-multimedia      
+meta-networking      
+meta-perl            
+meta-python          = "master:3b245e4fe85be62c309650e84d1aaacbcb0d5505"
+meta-qt5             = "master:2a5f9415e48a38f6f4eb0cf375737a2d8438e2fe"
+meta-security        = "master:c28b72e91dbd6a4aa7f3517d2859551126e6774c"
+
+Initialising tasks: 100% |#######################################| Time: 0:00:03
+Sstate summary: Wanted 1 Found 1 Missed 0 Current 1499 (100% match, 100% complete)
+NOTE: Executing SetScene Tasks
+NOTE: Executing RunQueue Tasks
+NOTE: Tasks Summary: Attempted 4444 tasks of which 4444 didn't need to be rerun and all succeeded.
+
+Summary: There was 1 WARNING message shown.
+dong@dong-ThinkPad-T420:~/data1/rasp_weston6/build$ 
