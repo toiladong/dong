@@ -1,5 +1,1 @@
-cc -o inspect tests/dbgutil.o tests/inspect.o libquirc.a  -lm -ljpeg -lpng  -lSDL_gfx
-/usr/bin/ld: tests/inspect.o: undefined reference to symbol 'SDL_UnlockSurface'
-//usr/lib/x86_64-linux-gnu/libSDL-1.2.so.0: error adding symbols: DSO missing from command line
-collect2: error: ld returned 1 exit status
-make: *** [inspect] Error 1
+/media/sf_D_DRIVE/VATF_AATF_source_code
