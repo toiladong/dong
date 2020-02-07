@@ -1,1 +1,6 @@
 /media/sf_D_DRIVE/ATF_souce_code/ATF source code/vatf_reference_data/data_clone
+
+sudo add-apt-repository ppa:kirillshkrogalev/ffmpeg-next
+sudo apt-get update
+sudo apt-get install libavcodec-ffmpeg56
+sudo apt-get install libavformat-ffmpeg56
