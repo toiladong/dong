@@ -4,3 +4,49 @@ sudo add-apt-repository ppa:kirillshkrogalev/ffmpeg-next
 sudo apt-get update
 sudo apt-get install libavcodec-ffmpeg56
 sudo apt-get install libavformat-ffmpeg56
+
+
+- detect there is a frame captured by checking "buffer_size!=0"?
+
+if yes. why waiting until "buffer_size!=0"
+start capture. 
+
+- why have two type of detectQRCode (detectQRCodeQUIRC and detectQRCodeZBAR)?
+which format we can use QUIRC to detect?
+
+- read image from fname: is a new file or detected file?
+- short describe about: read_image_YUV420P_from_file, read_image_YUY2_from_file, read_image_RGB24_from_file.
+- Why after convert from RGB/YUV2 to YUV by "cv::cvtColor" but we need two function(detectQRCodeQUIRC() or detectQRCodeZBAR()) to detect QRcode?
+- 
+
+
+
+VATF_handler:
+....
+create 4 threads:
+**capture
+**qrcode
+**hash
+**compare
+
+
+1/Capture: when startCapture called
+
+- generrate capture commandline by genPipeline(). example:
+
+gst-launch-1.0 v4l2src device=/dev/video0 ! video/x-raw,width=1920,height=1080, format=RGB, framerate=30/1 ! videoconvert ! multifilesink post-messages=true location=/mnt/ramdisk/CAPTURED_%01d.yuv >  GST_LOG  & echo $! > msg
+
+- check .yuv files at working dir to detect captured sucessfully
+
+2/qrcode: when startCapture called
+
+- create matrix raw_image_buf(qr_x_size, qr_y_size)
+- detect QRcode from fname
++ video format
+	RGB24: RGB->YUV
+	YUY2: YUV2->RGB->YUV
++ read content of QRcode file by detectQRCodeQUIRC() or detectQRCodeZBAR(). QRcode is fram ID
++ frame has no QRcode: change file name
++ frame has QRcode: 
+	check delay frame: QRcode not change -> delete frame
+	check skip/normal/repeat case: normal: framID=frameID-1, skip preFrameID<frameID-1, repeat: preFrameID>frameID
