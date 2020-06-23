@@ -9,13 +9,3 @@
   500  git push git@gitlab.rvc.renesas.com:SI/fuego-renesas.git v5.3
   501  git clone git@gitlab.rvc.renesas.com:OS-Solution/feat_box_dev.git
   502  cd feat_box_dev/
-  503  git branch -a
-  504  git checkout -b remotes/origin/v3/FEATBox_Software
-  505  git log -1
-  506  git checkout -b v3/FEATBox_Software
-  507  git log -1
-  508  git checkout v3/FEATBox_Software
-  509  gti log -1
-  510  git log -1
-  511  git checkout v3/FEATBox_Software
-  512  git log -1
