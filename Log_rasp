@@ -1,0 +1,404 @@
+4FB-L0523-LB01-INTERNET-USB(~)$ cd /data3/dongdaowl/tmp_2
+4FB-L0523-LB01-INTERNET-USB(/data3/dongdaowl/tmp_2)$ git clone -b thud git://git.yoctoproject.org/poky.git 
+Cloning into 'poky'...
+remote: Counting objects: 442678, done.
+remote: Compressing objects: 100% (104295/104295), done.
+remote: Total 442678 (delta 331275), reused 442578 (delta 331194)
+Receiving objects: 100% (442678/442678), 155.97 MiB | 1.88 MiB/s, done.
+Resolving deltas: 100% (331275/331275), done.
+Checking connectivity... done.
+4FB-L0523-LB01-INTERNET-USB(/data3/dongdaowl/tmp_2)$ cd poky/
+4FB-L0523-LB01-INTERNET-USB(/data3/dongdaowl/tmp_2/poky)$ git clone -b thud git://git.openembedded.org/meta-openembedded
+Cloning into 'meta-openembedded'...
+remote: Counting objects: 108716, done.
+remote: Compressing objects: 100% (37697/37697), done.
+remote: Total 108716 (delta 67043), reused 106199 (delta 65500)
+Receiving objects: 100% (108716/108716), 32.17 MiB | 5.61 MiB/s, done.
+Resolving deltas: 100% (67043/67043), done.
+Checking connectivity... done.
+4FB-L0523-LB01-INTERNET-USB(/data3/dongdaowl/tmp_2/poky)$ git clone -b thud https://github.com/meta-qt5/meta-qt5
+Cloning into 'meta-qt5'...
+remote: Enumerating objects: 16, done.
+remote: Counting objects: 100% (16/16), done.
+remote: Compressing objects: 100% (15/15), done.
+remote: Total 11437 (delta 4), reused 4 (delta 1), pack-reused 11421
+Receiving objects: 100% (11437/11437), 2.95 MiB | 1.01 MiB/s, done.
+Resolving deltas: 100% (7798/7798), done.
+Checking connectivity... done.
+4FB-L0523-LB01-INTERNET-USB(/data3/dongdaowl/tmp_2/poky)$ git clone -b thud git://git.yoctoproject.org/meta-security
+Cloning into 'meta-security'...
+remote: Counting objects: 3672, done.
+remote: Compressing objects: 100% (1665/1665), done.
+remote: Total 3672 (delta 1873), reused 3552 (delta 1753)
+Receiving objects: 100% (3672/3672), 3.52 MiB | 885.00 KiB/s, done.
+Resolving deltas: 100% (1873/1873), done.
+Checking connectivity... done.
+4FB-L0523-LB01-INTERNET-USB(/data3/dongdaowl/tmp_2/poky)$ git clone -b thud git://git.yoctoproject.org/meta-raspberrypi
+Cloning into 'meta-raspberrypi'...
+remote: Counting objects: 6184, done.
+remote: Compressing objects: 100% (2682/2682), done.
+remote: Total 6184 (delta 3334), reused 5901 (delta 3143)
+Receiving objects: 100% (6184/6184), 1.43 MiB | 815.00 KiB/s, done.
+Resolving deltas: 100% (3334/3334), done.
+Checking connectivity... done.
+4FB-L0523-LB01-INTERNET-USB(/data3/dongdaowl/tmp_2/poky)$ cd ..
+4FB-L0523-LB01-INTERNET-USB(/data3/dongdaowl/tmp_2)$ source poky/oe-init-build-env
+You had no conf/local.conf file. This configuration file has therefore been
+created for you with some default values. You may wish to edit it to, for
+example, select a different MACHINE (target hardware). See conf/local.conf
+for more information as common configuration options are commented.
+
+You had no conf/bblayers.conf file. This configuration file has therefore been
+created for you with some default values. To add additional metadata layers
+into your configuration please add entries to conf/bblayers.conf.
+
+The Yocto Project has extensive documentation about OE including a reference
+manual which can be found at:
+    http://yoctoproject.org/documentation
+
+For more information about OpenEmbedded see their website:
+    http://www.openembedded.org/
+
+
+### Shell environment set up for builds. ###
+
+You can now run 'bitbake <target>'
+
+Common targets are:
+    core-image-minimal
+    core-image-sato
+    meta-toolchain
+    meta-ide-support
+
+You can also run generated qemu images with a command like 'runqemu qemux86'
+4FB-L0523-LB01-INTERNET-USB(/data3/dongdaowl/tmp_2/build)$ bitbake-layers add-layer ../poky/meta-raspberrypi
+NOTE: Starting bitbake server...
+4FB-L0523-LB01-INTERNET-USB(/data3/dongdaowl/tmp_2/build)$ bitbake-layers add-layer ../poky/meta-openembedded/meta-oe
+NOTE: Starting bitbake server...
+4FB-L0523-LB01-INTERNET-USB(/data3/dongdaowl/tmp_2/build)$ cat conf/local.conf
+#
+# This file is your local configuration file and is where all local user settings
+# are placed. The comments in this file give some guide to the options a new user
+# to the system might want to change but pretty much any configuration option can
+# be set in this file. More adventurous users can look at local.conf.extended
+# which contains other examples of configuration which can be placed in this file
+# but new users likely won't need any of them initially.
+#
+# Lines starting with the '#' character are commented out and in some cases the
+# default values are provided as comments to show people example syntax. Enabling
+# the option is a question of removing the # character and making any change to the
+# variable as required.
+
+#
+# Machine Selection
+#
+# You need to select a specific machine to target the build with. There are a selection
+# of emulated machines available which can boot and run in the QEMU emulator:
+#
+#MACHINE ?= "qemuarm"
+#MACHINE ?= "qemuarm64"
+#MACHINE ?= "qemumips"
+#MACHINE ?= "qemumips64"
+#MACHINE ?= "qemuppc"
+#MACHINE ?= "qemux86"
+#MACHINE ?= "qemux86-64"
+#
+# There are also the following hardware board target machines included for 
+# demonstration purposes:
+#
+#MACHINE ?= "beaglebone-yocto"
+#MACHINE ?= "genericx86"
+#MACHINE ?= "genericx86-64"
+#MACHINE ?= "mpc8315e-rdb"
+#MACHINE ?= "edgerouter"
+#
+# This sets the default machine to be qemux86 if no other machine is selected:
+#MACHINE ??= "qemux86"
+MACHINE ?= "raspberrypi3" 
+DISTRO_FEATURES_append = " wayland opengl" 
+DISTRO_FEATURES_remove = " x11" 
+MACHINE_FEATURES += "vc4graphics"  
+CONNECTIVITY_CHECK_URIS = "" 
+ENABLE_UART="1"
+#
+# Where to place downloads
+#
+# During a first build the system will download many different source code tarballs
+# from various upstream projects. This can take a while, particularly if your network
+# connection is slow. These are all stored in DL_DIR. When wiping and rebuilding you
+# can preserve this directory to speed up this part of subsequent builds. This directory
+# is safe to share between multiple builds on the same machine too.
+#
+# The default is a downloads directory under TOPDIR which is the build directory.
+#
+#DL_DIR ?= "${TOPDIR}/downloads"
+
+#
+# Where to place shared-state files
+#
+# BitBake has the capability to accelerate builds based on previously built output.
+# This is done using "shared state" files which can be thought of as cache objects
+# and this option determines where those files are placed.
+#
+# You can wipe out TMPDIR leaving this directory intact and the build would regenerate
+# from these files if no changes were made to the configuration. If changes were made
+# to the configuration, only shared state files where the state was still valid would
+# be used (done using checksums).
+#
+# The default is a sstate-cache directory under TOPDIR.
+#
+#SSTATE_DIR ?= "${TOPDIR}/sstate-cache"
+
+#
+# Where to place the build output
+#
+# This option specifies where the bulk of the building work should be done and
+# where BitBake should place its temporary files and output. Keep in mind that
+# this includes the extraction and compilation of many applications and the toolchain
+# which can use Gigabytes of hard disk space.
+#
+# The default is a tmp directory under TOPDIR.
+#
+#TMPDIR = "${TOPDIR}/tmp"
+
+#
+# Default policy config
+#
+# The distribution setting controls which policy settings are used as defaults.
+# The default value is fine for general Yocto project use, at least initially.
+# Ultimately when creating custom policy, people will likely end up subclassing 
+# these defaults.
+#
+DISTRO ?= "poky"
+# As an example of a subclass there is a "bleeding" edge policy configuration
+# where many versions are set to the absolute latest code from the upstream 
+# source control systems. This is just mentioned here as an example, its not
+# useful to most new users.
+# DISTRO ?= "poky-bleeding"
+
+#
+# Package Management configuration
+#
+# This variable lists which packaging formats to enable. Multiple package backends
+# can be enabled at once and the first item listed in the variable will be used
+# to generate the root filesystems.
+# Options are:
+#  - 'package_deb' for debian style deb files
+#  - 'package_ipk' for ipk files are used by opkg (a debian style embedded package manager)
+#  - 'package_rpm' for rpm style packages
+# E.g.: PACKAGE_CLASSES ?= "package_rpm package_deb package_ipk"
+# We default to rpm:
+PACKAGE_CLASSES ?= "package_rpm"
+
+#
+# SDK target architecture
+#
+# This variable specifies the architecture to build SDK items for and means
+# you can build the SDK packages for architectures other than the machine you are
+# running the build on (i.e. building i686 packages on an x86_64 host).
+# Supported values are i686 and x86_64
+#SDKMACHINE ?= "i686"
+
+#
+# Extra image configuration defaults
+#
+# The EXTRA_IMAGE_FEATURES variable allows extra packages to be added to the generated
+# images. Some of these options are added to certain image types automatically. The
+# variable can contain the following options:
+#  "dbg-pkgs"       - add -dbg packages for all installed packages
+#                     (adds symbol information for debugging/profiling)
+#  "dev-pkgs"       - add -dev packages for all installed packages
+#                     (useful if you want to develop against libs in the image)
+#  "ptest-pkgs"     - add -ptest packages for all ptest-enabled packages
+#                     (useful if you want to run the package test suites)
+#  "tools-sdk"      - add development tools (gcc, make, pkgconfig etc.)
+#  "tools-debug"    - add debugging tools (gdb, strace)
+#  "eclipse-debug"  - add Eclipse remote debugging support
+#  "tools-profile"  - add profiling tools (oprofile, lttng, valgrind)
+#  "tools-testapps" - add useful testing tools (ts_print, aplay, arecord etc.)
+#  "debug-tweaks"   - make an image suitable for development
+#                     e.g. ssh root access has a blank password
+# There are other application targets that can be used here too, see
+# meta/classes/image.bbclass and meta/classes/core-image.bbclass for more details.
+# We default to enabling the debugging tweaks.
+EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
+
+#
+# Additional image features
+#
+# The following is a list of additional classes to use when building images which
+# enable extra features. Some available options which can be included in this variable
+# are:
+#   - 'buildstats' collect build statistics
+#   - 'image-mklibs' to reduce shared library files size for an image
+#   - 'image-prelink' in order to prelink the filesystem image
+# NOTE: if listing mklibs & prelink both, then make sure mklibs is before prelink
+# NOTE: mklibs also needs to be explicitly enabled for a given image, see local.conf.extended
+USER_CLASSES ?= "buildstats image-mklibs image-prelink"
+
+#
+# Runtime testing of images
+#
+# The build system can test booting virtual machine images under qemu (an emulator)
+# after any root filesystems are created and run tests against those images. It can also
+# run tests against any SDK that are built. To enable this uncomment these lines.
+# See classes/test{image,sdk}.bbclass for further details.
+#IMAGE_CLASSES += "testimage testsdk"
+#TESTIMAGE_AUTO_qemuall = "1"
+
+#
+# Interactive shell configuration
+#
+# Under certain circumstances the system may need input from you and to do this it
+# can launch an interactive shell. It needs to do this since the build is
+# multithreaded and needs to be able to handle the case where more than one parallel
+# process may require the user's attention. The default is iterate over the available
+# terminal types to find one that works.
+#
+# Examples of the occasions this may happen are when resolving patches which cannot
+# be applied, to use the devshell or the kernel menuconfig
+#
+# Supported values are auto, gnome, xfce, rxvt, screen, konsole (KDE 3.x only), none
+# Note: currently, Konsole support only works for KDE 3.x due to the way
+# newer Konsole versions behave
+#OE_TERMINAL = "auto"
+# By default disable interactive patch resolution (tasks will just fail instead):
+PATCHRESOLVE = "noop"
+
+#
+# Disk Space Monitoring during the build
+#
+# Monitor the disk space during the build. If there is less that 1GB of space or less
+# than 100K inodes in any key build location (TMPDIR, DL_DIR, SSTATE_DIR), gracefully
+# shutdown the build. If there is less that 100MB or 1K inodes, perform a hard abort
+# of the build. The reason for this is that running completely out of space can corrupt
+# files and damages the build in ways which may not be easily recoverable.
+# It's necesary to monitor /tmp, if there is no space left the build will fail
+# with very exotic errors.
+BB_DISKMON_DIRS ??= "\
+    STOPTASKS,${TMPDIR},1G,100K \
+    STOPTASKS,${DL_DIR},1G,100K \
+    STOPTASKS,${SSTATE_DIR},1G,100K \
+    STOPTASKS,/tmp,100M,100K \
+    ABORT,${TMPDIR},100M,1K \
+    ABORT,${DL_DIR},100M,1K \
+    ABORT,${SSTATE_DIR},100M,1K \
+    ABORT,/tmp,10M,1K"
+
+#
+# Shared-state files from other locations
+#
+# As mentioned above, shared state files are prebuilt cache data objects which can
+# used to accelerate build time. This variable can be used to configure the system
+# to search other mirror locations for these objects before it builds the data itself.
+#
+# This can be a filesystem directory, or a remote url such as http or ftp. These
+# would contain the sstate-cache results from previous builds (possibly from other
+# machines). This variable works like fetcher MIRRORS/PREMIRRORS and points to the
+# cache locations to check for the shared objects.
+# NOTE: if the mirror uses the same structure as SSTATE_DIR, you need to add PATH
+# at the end as shown in the examples below. This will be substituted with the
+# correct path within the directory structure.
+#SSTATE_MIRRORS ?= "\
+#file://.* http://someserver.tld/share/sstate/PATH;downloadfilename=PATH \n \
+#file://.* file:///some/local/dir/sstate/PATH"
+
+#
+# Yocto Project SState Mirror
+#
+# The Yocto Project has prebuilt artefacts available for its releases, you can enable
+# use of these by uncommenting the following line. This will mean the build uses
+# the network to check for artefacts at the start of builds, which does slow it down
+# equally, it will also speed up the builds by not having to build things if they are
+# present in the cache. It assumes you can download something faster than you can build it
+# which will depend on your network.
+#
+#SSTATE_MIRRORS ?= "file://.* http://sstate.yoctoproject.org/2.5/PATH;downloadfilename=PATH"
+
+#
+# Qemu configuration
+#
+# By default qemu will build with a builtin VNC server where graphical output can be
+# seen. The two lines below enable the SDL backend too. By default libsdl2-native will
+# be built, if you want to use your host's libSDL instead of the minimal libsdl built
+# by libsdl2-native then uncomment the ASSUME_PROVIDED line below.
+PACKAGECONFIG_append_pn-qemu-native = " sdl"
+PACKAGECONFIG_append_pn-nativesdk-qemu = " sdl"
+#ASSUME_PROVIDED += "libsdl2-native"
+
+# CONF_VERSION is increased each time build/conf/ changes incompatibly and is used to
+# track the version of this file when it was generated. This can safely be ignored if
+# this doesn't mean anything to you.
+CONF_VERSION = "1"
+4FB-L0523-LB01-INTERNET-USB(/data3/dongdaowl/tmp_2/build)$ cat conf/bblayers.conf
+# POKY_BBLAYERS_CONF_VERSION is increased each time build/conf/bblayers.conf
+# changes incompatibly
+POKY_BBLAYERS_CONF_VERSION = "2"
+
+BBPATH = "${TOPDIR}"
+BBFILES ?= ""
+
+BBLAYERS ?= " \
+  /data3/dongdaowl/tmp_2/poky/meta \
+  /data3/dongdaowl/tmp_2/poky/meta-poky \
+  /data3/dongdaowl/tmp_2/poky/meta-yocto-bsp \
+  /data3/dongdaowl/tmp_2/poky/meta-raspberrypi \
+  /data3/dongdaowl/tmp_2/poky/meta-openembedded/meta-oe \
+  /data3/dongdaowl/tmp_2/poky/meta-openembedded/meta-oe \
+  /data3/dongdaowl/tmp_2/poky/meta-openembedded/meta-multimedia \
+  /data3/dongdaowl/tmp_2/poky/meta-openembedded/meta-networking \
+  /data3/dongdaowl/tmp_2/poky/meta-openembedded/meta-perl \
+  /data3/dongdaowl/tmp_2/poky/meta-openembedded/meta-python \
+  /data3/dongdaowl/tmp_2/poky/meta-qt5 \
+  /data3/dongdaowl/tmp_2/poky/meta-raspberrypi \
+  /data3/dongdaowl/tmp_2/poky/meta-security \  
+  "
+4FB-L0523-LB01-INTERNET-USB(/data3/dongdaowl/tmp_2/build)$ time bitbake core-image-weston 
+WARNING: Host distribution "ubuntu-14.04" has not been validated with this version of the build system; you may possibly experience unexpected failures. It is recommended that you use a tested distribution.
+Parsing recipes: 100% |#######################################################################################################################################################################| Time: 0:00:48
+Parsing of 2356 .bb files complete (0 cached, 2356 parsed). 3375 targets, 331 skipped, 0 masked, 0 errors.
+NOTE: Resolving any missing task queue dependencies
+
+Build Configuration:
+BB_VERSION           = "1.40.0"
+BUILD_SYS            = "x86_64-linux"
+NATIVELSBSTRING      = "ubuntu-14.04"
+TARGET_SYS           = "arm-poky-linux-gnueabi"
+MACHINE              = "raspberrypi3"
+DISTRO               = "poky"
+DISTRO_VERSION       = "2.6.2"
+TUNE_FEATURES        = "arm armv7ve vfp thumb neon vfpv4 callconvention-hard cortexa7"
+TARGET_FPU           = "hard"
+meta                 
+meta-poky            
+meta-yocto-bsp       = "thud:cdd4a52578f4f1b79b3fc2c92aa4434b99efd91c"
+meta-raspberrypi     = "thud:c71d79efc5a06a0c896c278c94f5b14413bb4d69"
+meta-oe              
+meta-oe              
+meta-multimedia      
+meta-networking      
+meta-perl            
+meta-python          = "thud:9b3b907f30b0d5b92d58c7e68289184fda733d3e"
+meta-qt5             = "thud:0630018c0033c91fddda62a49f59a82ba6ec6850"
+meta-raspberrypi     = "thud:c71d79efc5a06a0c896c278c94f5b14413bb4d69"
+meta-security        = "thud:31dc4e7532fa7a82060e0b50e5eb8d0414aa7e93"
+
+NOTE: Fetching uninative binary shim from http://downloads.yoctoproject.org/releases/uninative/2.4/x86_64-nativesdk-libc.tar.bz2;sha256sum=06f91685b782f2ccfedf3070b3ba0fe4a5ba2f0766dad5c9d1642dccf95accd0
+Initialising tasks: 100% |####################################################################################################################################################################| Time: 0:00:03
+Sstate summary: Wanted 1388 Found 0 Missed 1388 Current 0 (0% match, 0% complete)
+NOTE: Executing SetScene Tasks
+NOTE: Executing RunQueue Tasks
+
+Keyboard Interrupt, closing down...
+
+
+Second Keyboard Interrupt, stopping...
+
+
+Summary: There was 1 WARNING message shown.
+Execution was interrupted, returning a non-zero exit code.
+
+real	2m47.114s
+user	0m1.684s
+sys	0m0.204s
+4FB-L0523-LB01-INTERNET-USB(/data3/dongdaowl/tmp_2/build)$ 

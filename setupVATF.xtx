@@ -1,0 +1,373 @@
+
+II. Setup VATF PC.
+
+Required OS: Ubuntu 14.04-kernel 4.4.0-93-generic 64-bit
+HW spec: Intel(R) Core(TM) i5-3570 CPU @ 3.40GHz with 8GB DDR3-1333 MHz RAM,500GB HDD
+Edit this section
+Step 1: Install library
+
+    List:
+        opencv-3.3.0
+        xxhash v0.6.5
+        quirc
+        zbar
+
+Edit this section
+1. Install OpenCV
+
+VAFT uses OpenCV-3.3.0
+Due to huge data size, you should make helpdesk to ask for installation from IT members
+
+How to confirm OpenCV installed
+
+#pkg-config opencv --cflags
+#pkg-config opencv --libs
+
+How to check installed OpenCV version on Ubuntu PC
+
+#pkg-config --modversion opencv
+
+Edit this section
+2. Install XXHASH lib
+
+To create the hash value for capture frame.
+VATF supports:
+- MD5HASH OR XXHASH
+- Capture video format: RGB24, YUY2, YUV420P
+==> Recommendation: RGB24 + XXHASH
+VAFT team changed to use xxhash v0.6.5 instead v0.6.3 since sometimes v0.6.3 returns no value after our request hashing.
+
+git clone https://github.com/Cyan4973/xxHash.git
+make and make install
+
+Edit this section
+3. Install quirc app
+
+To detect QRCode in captured video frames
+
+git clone https://github.com/dlbeer/quirc.git
+make and make install
+
+
+Note that VATF is built in quirc. So, can skip quirc this time.
+
+Edit this section
+4. Install zbar app
+
+sudo apt-get update
+sudo apt-get install libzbar-dev -y
+
+Edit this section
+Step 2: Setup Reference data
+
+Reference data collection of video frames from the HDMI output of video playback on R-Car which Be captured and hashed.
+
+There are two ways to setup reference data:
+1.Self-create Reference data
+Please refer to Section "D-Create Ref data"
+
+2. Use prepared Reference data
+Check the git repo of Reference data on git@gitlab.rvc.renesas.com:SI/vatf_reference_data.git
+
+construction of ref data folder in git repo:
+
+vatf_reference_data/
+                   /GPU_Mode/
+                        /H3_M3/
+                            /3840x2160/
+                                /stream_1.tar.gz
+                                .
+                                .
+                                /stream_n.tar.gz
+                            /1920x1080/
+                                /stream_1.tar.gz
+                                .
+                                .
+                                /stream_n.tar.gz
+                            /Weston_Ref/
+                                /XXHASH_RGB24_Disp_FHD_Cap_FHD.data
+                                .
+                                /XXHASH_RGB24_Disp_UHD_Cap_UHD.data
+                        /M3N/
+                            /3840x2160/
+                                /stream_1.tar.gz
+                                .
+                                .
+                                /stream_n.tar.gz
+                            /1920x1080/
+                                /stream_1.tar.gz
+                                .
+                                .
+                                /stream_n.tar.gz
+                            /Weston_Ref/
+                                /XXHASH_RGB24_Disp_FHD_Cap_FHD.data
+                                .
+                                /XXHASH_RGB24_Disp_UHD_Cap_UHD.data
+                        /E3/
+                            /1280x1024/
+                                /stream_1.tar.gz
+                                .
+                                .
+                                /stream_n.tar.gz
+                            /Weston_Ref/
+                                /XXHASH_RGB24_Disp_FHD_Cap_FHD.data
+                                .
+                                /XXHASH_RGB24_Disp_UHD_Cap_UHD.data
+
+R-Car board supports 2 rendering modes: GPU and V4L2.
+Currently, refer to GPU mode.
+
+3840x2160 or 1920x1080 is resolution of output from HDMI
+copy and un-tar all ref data from git to VATF PC:
+vatf_reference_data/GPU_Mode/3840x2160/stream.tar --> ref_folder/3840x2160/stream
+vatf_reference_data/GPU_Mode/1920x1080/stream.tar --> ref_folder/1920x1080/stream
+
+construction of ref data folder in VATF PC:
+Each video stream ref data is stored in each stream_n separately.
+
+ref_folder/
+          /3840x2160/
+              /stream_1/
+                       /MD5_1.data
+                       /MD5_2.data
+                       .
+                       .
+                       /MD5_n.data
+              .
+              .
+              /stream_m/
+                       /MD5_1.data
+                       /MD5_2.data
+                       .
+                       .
+                       /MD5_n.data
+          /1920x1080/
+              /stream_1/
+                       /MD5_1.data
+                       /MD5_2.data
+                       .
+                       .
+                       /MD5_n.data
+              .
+              .
+              /stream_m/
+                       /MD5_1.data
+                       /MD5_2.data
+                       .
+                       .
+                       /MD5_n.data
+          /1280x1024/
+              /stream_1/
+                       /MD5_1.data
+                       /MD5_2.data
+                       .
+                       .
+                       /MD5_n.data
+              .
+              .
+              /stream_m/
+                       /MD5_1.data
+                       /MD5_2.data
+                       .
+                       .
+                       /MD5_n.data
+          /Weston_Ref/
+              /XXHASH_RGB24_Disp_FHD_Cap_FHD.data
+               .
+              /XXHASH_RGB24_Disp_UHD_Cap_UHD.data
+
+Edit this section
+Step 3: VATF Handler
+Edit this section
+1. Check out the latest source code
+
+Get the latest version of VATF_handler and vatf common
+http://172.29.143.164:8080/projects/rcar_fuego/wiki/VATF_Repositories
+
+Note:
+run below git status command to check the file in vatf_handler is lacked or enough
+
+$ git status
+On branch v3.5
+Your branch is ahead of '206/v3.5' by 1 commit.
+  (use "git push" to publish your local commits)
+nothing to commit, working tree clean
+
+Edit this section
+2. Compile VATF handler
+
+cd vatf_handler
+make clean;make
+
+Edit this section
+III. Setup R-Car board
+Edit this section
+Step 1. Get the Yocto environment
+
+with link below:
+
+    \\rvc-vnas-01\DTV\Prj_SI\10.YoctoRelease
+
+MUST use version support AATF/VATF due to:
+- VATF: fix location of video display by Wayland @ O(0,0)
+- AATF: added synchronization process between R-Car Gst and AATF recorder
+Edit this section
+Step 2. Deploy Yocto Env to R-Car board
+
+Refer to Yocto start-up guideline
+Edit this section
+Step 3. Config R-Car board
+
+Purpose:
+
+- close animation and panel-location
+- output HDMI only
+Edit this section
+1. modify weston.ini as below:
+
+Be noted that: you can skip this weston.ini modification since Fuego test script is provided a solution to modify weston.ini automatically
+follow R-Car HDMI config in .spec of each Fuego test job.
+
+    #vi /etc/xdg/weston/weston.ini
+
+[core]
+repaint-window=34
+
+[v4l2-renderer]
+device=/dev/media1
+device-module=vsp2
+
+[output]
+name=LVDS-1
+mode=off
+[output]
+name=VGA-1
+mode=off
+[output]
+name=HDMI-A-1
+mode=1920x1080
+
+[shell]
+panel-position=none
+close-animation=none
+
+
+play video with HDMI output FHD => keep the line mode=1920x1080
+play video with HDMI output UHD => replace mode=1920x1080 by mode=3840x2160
+Edit this section
+2. reboot R-Car or re-start Weston
+Edit this section
+3. change permission for jenkins
+
+    vi /etc/default/jenkins
+
+update: JENKINS_USER=$NAME -> JENKINS_USER=root
+
+Command to restart Weston:
+
+    #systemctl restart weston
+
+Edit this section
+C-Run video automation test
+Edit this section
+I. Run Handler on VATF PC
+Edit this section
+Step 1: Config the reference data and backup data paths
+
+Reference data: the path to the output of section II/Step 3
+Backup data: store test log.
+
+cd vatf_handler
+vi config.txt
+-- Edit
+REFERENCE_DIR = /tftpboot/VATF/REF_XXHASH # the folder of ref data
+VATF_BK_DIR = /tftpboot/backup            # the folder of backup hash data   
+WESTON_REF_DIR = Weston_Ref               # the folder of hash of weston (FHD and UHD)     
+USER_NAME = rvc                           # user name of VATF PC 
+PASSWORD = Pass1234                       # password of VATF PC
+
+Edit this section
+Step 2: Run VATF handler
+
+1. If you have not declared /usr/local/lib for LD_LIBRARY_PATH in your VATF Linux PC.
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+
+
+2. Execute VATF
+
+cd vatf_handler
+./vatfProgram
+#Fill sudo password
+
+Edit this section
+II. Fuego GUI
+
+Open Job
+Execute test cases with [VATF] enable option.
+Edit this section
+D-Create Ref data
+
+The flow of Ref data and tested data
+
+During time making Reference data:
+R-Car plays video
+VATF PC captured and hash captured video
+h3. Human must observer video to judge video quality output
+
+construction of backup ref data:
++ stream play with output from HDMI@resolution
+.../backup/<test_case>/<test_plan>/<test_spec>/<build_id>/<build_number>/<test_stream>/*resolution*_Hash_backup/
++ Example:
+.../backup/<test_case>/<test_plan>/<test_spec>/<build_id>/<build_number>/<test_stream>/3840x2160_Hash_backup/
+
+create new ref data from backup directory
++ get the tool create_ref from atf_script on git@gitlab.rvc.renesas.com:SI/atf_script.git
++ put tool to below location:
+git@gitlab.rvc.renesas.com:SI/atf_script.git
+
+/VATF
+    /backup
+    create_ref
+
+
++ run ./create_ref for usage
++ prepare list of stream or TCs
+
+
+expected criteria of reference data: the number of reference data >= 95% of the number frame of the test stream
+
+command line to live view the output of board:
+
+    gst-launch-1.0 v4l2src device=/dev/video0 ! video/x-raw, width=640, height=360, format=I420, framerate=60/1 ! videoconvert ! autovideosink
+
+Edit this section
+E-Run simple TC to confirm system:
+
+TC name: LinuxSI.Gstreamer.play.H264.FullHD.movie
+
+log of OK cases
+
+[VATF] ------------------------------------
+[VATF] bbb_short.ffmpeg.1920x1080.mp4.libx264_5000kbps_30fps.libfaac_stereo_192kbps_48000Hz.mp4
+
+[VATF] VATF result: OK
+[VATF] Total number of Reference frames: 240
+[VATF] Total number Frame of Test Stream: 240
+[VATF] Total number of captured frames (included with & without QRCode): 459
+[VATF] Total playback times: 1
+
+############################################
+
+[VATF] Delay during video playback
+[VATF] Total number of Delay frames: 1 (frame)
+[VATF] Ratio of Delay frames: 1/240 = 0.417 %
+[VATF] Total Number of Skip frames: 0 (frame)
+[VATF] Ratio of Skip frames: 0/240 = 0.000 %
+[VATF] Total number of Frames have no QR Code: 0
+[VATF] Total number of Mismatch frames: 0
+[VATF] Ratio of Mismatch frames base on reference data: 0/240 = 0.000 %
+[VATF] Ratio of Mismatch frames base on Video Frame Number: 0/240 = 0.000 %
+[VATF] Total number of Compared frames (Not compare Delay frames): 0
+
+############################################
