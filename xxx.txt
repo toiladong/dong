@@ -1,4 +1,0 @@
-test
-
-this is test for merge
-this is test for merge 2nd
